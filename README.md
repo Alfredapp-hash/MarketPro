@@ -9,10 +9,13 @@ Next.js marketing app for Vercel. A site asks for a job, and MarketPro picks the
 
 ## Routes
 
+- `POST /api/marketing/campaign` runs the desk: brief, landing page, SEO, social posts, three scored variants, placement packs, and a 14-day calendar
 - `POST /api/marketing/generate` with `{ job, offer, provider, model, quality }`
 - `GET /api/marketing/providers`
 - `POST /api/marketing/score`
 - `POST /api/marketing/placements`
+
+A campaign sends strategy to DeepSeek and the everyday pieces to Ollama Cloud in parallel. A section that fails stays in the response as an error so the rest of the desk still comes back. The page keeps the last run in the browser.
 
 `provider` is `auto`, `dsh`, or `ollama_cloud`. `job` is `brief`, `landing`, `seo`, `social`, or `framework`.
 

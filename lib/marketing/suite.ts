@@ -122,11 +122,15 @@ function prompt(input: {
   framework: string;
   channel: string;
   url: string;
+  proof: string;
+  banned: string;
 }): string {
   const who = input.audience || "the site's customers";
   const brandLine = input.brand ? `Brand: ${input.brand}. ` : "";
   const voiceLine = input.voice ? `Voice: ${input.voice}. ` : "Voice: clear and specific. ";
   const site = input.url ? `URL: ${input.url}. ` : "";
+  const proofLine = input.proof ? `Proof you may use, and nothing beyond it: ${input.proof}. ` : "No proof was supplied. ";
+  const bannedLine = input.banned ? `Banned phrases: ${input.banned}. ` : "";
   const shapes: Record<Job, string> = {
     brief: '{"title":"","idea":"","audience":"","tension":"","promise":"","proof":"","channels":[]}',
     landing: '{"headline":"","subhead":"","problem":"","offer":"","proof_points":[],"cta":""}',
@@ -138,7 +142,7 @@ function prompt(input: {
   if (input.job === "framework") extra = ` Use the ${input.framework} framework. blocks keys must match that framework.`;
   if (input.job === "seo") extra = " title under 60 characters, description under 160.";
   if (input.job === "social") extra = " Write three posts. Do not claim results you were not given.";
-  return `${HONESTY}\n${brandLine}${voiceLine}${site}Audience: ${who}. Offer: ${input.offer}. Channel: ${input.channel}.${extra}\nReturn JSON in this shape: ${shapes[input.job]}`;
+  return `${HONESTY}\n${brandLine}${voiceLine}${site}${proofLine}${bannedLine}Audience: ${who}. Offer: ${input.offer}. Channel: ${input.channel}.${extra}\nReturn JSON in this shape: ${shapes[input.job]}`;
 }
 
 export async function completeDsh(model: string, messages: ChatMessage[], env: Env = readEnv()): Promise<string> {
@@ -179,6 +183,8 @@ export async function generate(
     framework?: string;
     channel?: string;
     url?: string;
+    proof?: string;
+    banned?: string[];
     provider?: string;
     model?: string | null;
     quality?: Quality;
@@ -206,6 +212,8 @@ export async function generate(
         framework,
         channel: input.channel || "meta_facebook",
         url: input.url || "",
+        proof: input.proof || "",
+        banned: (input.banned || []).filter(Boolean).join(", "),
       }),
     },
   ];

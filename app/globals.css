@@ -18,22 +18,30 @@ body {
   font: 16px/1.45 "Segoe UI", sans-serif;
 }
 
-main {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 2.5rem 1.25rem 4rem;
-}
+main { max-width: 1080px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
 h1 { font-size: 1.8rem; margin: 0 0 0.35rem; }
-.lede { color: var(--muted); margin: 0 0 1.5rem; }
+h2 { font-size: 1.05rem; margin: 0 0 0.6rem; display: flex; gap: 0.6rem; align-items: baseline; }
+h3 { margin: 0.2rem 0; font-size: 1.15rem; }
+.lede, .meta { color: var(--muted); }
+.top { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-end; margin-bottom: 1.25rem; }
+.pills { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.pill, .score {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.pill.on { color: var(--accent); border-color: #465c32; }
 
-form, .result {
+form, section {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 1rem;
 }
-
+form { margin-bottom: 1rem; }
 label { display: block; font-size: 0.82rem; color: var(--muted); margin: 0.75rem 0 0.3rem; }
 input, select, textarea {
   width: 100%;
@@ -44,7 +52,7 @@ input, select, textarea {
   padding: 0.55rem 0.7rem;
   font: inherit;
 }
-textarea { min-height: 7rem; resize: vertical; }
+textarea { min-height: 5.5rem; resize: vertical; }
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 button {
   margin-top: 1rem;
@@ -57,11 +65,15 @@ button {
   font-weight: 650;
   cursor: pointer;
 }
-.result { margin-top: 1rem; }
-.result pre {
-  white-space: pre-wrap;
-  word-break: break-word;
-  margin: 0.5rem 0 0;
-}
+button:disabled { opacity: 0.6; cursor: progress; }
+.desk { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.desk section:first-child, .desk section:nth-child(5), .desk section:nth-child(6) { grid-column: 1 / -1; }
+.card { border-top: 1px solid var(--line); padding-top: 0.7rem; margin-top: 0.7rem; }
+.card.lead { outline: 1px solid #465c32; border-radius: 10px; padding: 0.7rem; }
+.calendar { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }
+.calendar li { display: grid; grid-template-columns: 7.2rem 6rem 1fr; gap: 0.6rem; }
 .error { color: var(--danger); }
-@media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
+@media (max-width: 800px) {
+  .top, .row, .desk, .calendar li { display: block; }
+  .calendar li span, .calendar li strong { display: block; }
+}
